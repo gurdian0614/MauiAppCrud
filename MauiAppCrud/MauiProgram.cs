@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using MauiAppCrud.DataAccess;
 
 namespace MauiAppCrud
 {
@@ -14,6 +15,10 @@ namespace MauiAppCrud
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
+            var dbContext = new EmpleadoDbContext();
+            dbContext.Database.EnsureCreated();
+            dbContext.Dispose();
 
 #if DEBUG
     		builder.Logging.AddDebug();
