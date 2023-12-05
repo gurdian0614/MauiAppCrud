@@ -55,8 +55,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="DTO\" />
-	  <Folder Include="ViewModels\" />
+	  <MauiXaml Update="Views\EmpleadoPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>

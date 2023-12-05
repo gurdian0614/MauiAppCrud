@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using MauiAppCrud.DataAccess;
+using MauiAppCrud.ViewModels;
+using MauiAppCrud.Views;
 
 namespace MauiAppCrud
 {
@@ -19,6 +21,17 @@ namespace MauiAppCrud
             var dbContext = new EmpleadoDbContext();
             dbContext.Database.EnsureCreated();
             dbContext.Dispose();
+
+            builder.Services.AddDbContext<EmpleadoDbContext>();
+
+            builder.Services.AddTransient<EmpleadoPage>();
+            builder.Services.AddTransient<EmpleadoViewModel>();
+
+            builder.Services.AddTransient<MainPage>();
+            builder.Services.AddTransient<MainViewModel>();
+
+            // Ir de una pagina a otra
+            Routing.RegisterRoute(nameof(EmpleadoPage), typeof(EmpleadoPage));
 
 #if DEBUG
     		builder.Logging.AddDebug();

@@ -1,41 +1,58 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:MauiAppCrud.DTO"
              x:Class="MauiAppCrud.MainPage">
 
-    <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
+    <Grid RowDefinitions="Auto, Auto, *" RowSpacing="15" Margin="15">
+        <Button Grid.Row="0" Text="Nuevo Empleado" Command="{Binding CrearCommand}" />
 
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
+        <Label Grid.Row="1" Text="Lista de Empleados" FontSize="Subtitle" />
 
-            <Label
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
+        <ScrollView Grid.Row="2">
+            <CollectionView ItemsSource="{Binding ListaEmpleado}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="5" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
 
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:EmpleadoDTO">
+                        <Border Padding="10,5" HorizontalOptions="FillAndExpand">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="5" />
+                            </Border.StrokeShape>
 
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
+                            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="Auto, *">
+                                <Label Grid.Row="0" Grid.Column="0" Text="Nombre: " FontAttributes="Bold" />
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Nombre}" />
 
-        </VerticalStackLayout>
-    </ScrollView>
+                                <Label Grid.Row="1" Grid.Column="0" Text="Correo electrónico: " FontAttributes="Bold" />
+                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding Email}" />
+
+                                <Label Grid.Row="2" Grid.Column="0" Text="Sueldo: " FontAttributes="Bold" />
+                                <Label Grid.Row="2" Grid.Column="1" Text="{Binding Sueldo, StringFormat='{0:C}'}" />
+
+                                <Label Grid.Row="3" Grid.Column="0" Text="Fecha de contrato: " FontAttributes="Bold" />
+                                <Label Grid.Row="3" Grid.Column="1" Text="{Binding FechaContrato, StringFormat='{0:dd/MM/yyyy}'}" />
+
+                                <Label Grid.Row="4" Grid.Column="0" Padding="0,15,10,5" Text="Editar" TextColor="Blue" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding BindingContext.EditarCommand, Source={x:RelativeSource AncestorType={x:Type ContentPage}}}"
+                                                              CommandParameter="{Binding}" />
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label Grid.Row="4" Grid.Column="1" Padding="0,15,0,5" Text="Eliminar" TextColor="Red" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding BindingContext.EliminarCommand, Source={x:RelativeSource AncestorType={x:Type ContentPage}}}"
+                                                              CommandParameter="{Binding}" />
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+    </Grid>
 
 </ContentPage>
